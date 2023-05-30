@@ -32,6 +32,7 @@ builder.Services.AddScoped<IMealRepo, MealRepo>();
 builder.Services.AddScoped<IDayRepo, DayRepo>();
 builder.Services.AddScoped<IFoodRepo, FoodRepo>();
 builder.Services.AddScoped<IBmiRepo, BmiRepo>();
+builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
@@ -39,6 +40,7 @@ builder.Services.AddScoped<IBmiService, BmiService>();
 builder.Services.AddScoped<IDayService, DayService>();
 builder.Services.AddScoped<IMealService, MealService>();
 builder.Services.AddScoped<IFoodService, FoodService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 
 
