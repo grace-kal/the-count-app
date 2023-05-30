@@ -38,7 +38,11 @@ namespace Count.App.Controllers
         {
             if (ModelState.IsValid)
             {
-                var meal = _mapper.Map<Meal>(model);
+                var meal = new Meal
+                {
+                    CourceTitle = model.CourceTitle,
+                    DayId = model.DayId,
+                };
                 await _service.CreateMeal(meal);
                 return RedirectToAction("AllMealsOfDay", "Day", new { id = model.DayId });
             }
