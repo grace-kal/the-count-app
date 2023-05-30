@@ -22,6 +22,6 @@ namespace Count.Models
 
         [ForeignKey("User")]
         public string AuthorId { get; set; }
-        public virtual User Author { get; set; }
+        public virtual User? Author { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Count.Models
 
         [ForeignKey("Day")]
         public int DayId { get; set; }
-        public virtual Day Day { get; set; }
+        public virtual Day? Day { get; set; }
 
         public virtual IEnumerable<Food>? Foods { get; set; }
 

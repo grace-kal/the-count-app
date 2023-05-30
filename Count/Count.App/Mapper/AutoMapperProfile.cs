@@ -15,8 +15,6 @@ namespace Count.App.Mapper
             CreateMap<User, User>();
 
             CreateMap<BmiUser, BmiUser>();
-            CreateMap<BmiUser, BmiUserBindingModel>();
-            CreateMap<BmiUserBindingModel, BmiUser>();
 
             CreateMap<Day, Day>();
 

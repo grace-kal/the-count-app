@@ -54,7 +54,7 @@ else
                         {
                             <td>Not Completed</td>
                         }
-                        <td>@day.Meals.Count()</td>
+                        <td>@day.Meals.Where(m=>m.IsDeleted==false).Count()</td>
                         <td><a asp-controller="Meal" asp-action="CreateMeal" asp-route-id="@day.Id" title="Create meal for this day" class="btn btn-outline-dark"><i class="fas fa-plus-circle"></i></a></td>
                         <td><a asp-controller="Day" asp-action="AllMealsOfDay" asp-route-id="@day.Id" title="Meals of the day" class="btn btn-outline-dark"><i class="fas fa-file-alt"></i></a></td>
                         <td><a asp-controller="Day" asp-action="DeleteDay" asp-route-id="@day.Id" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a></td>

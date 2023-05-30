@@ -12,10 +12,10 @@ namespace Count.Models
 
         [ForeignKey("Meal")]
         public int MealId { get; set; }
-        public virtual Meal Meal { get; set; }
+        public virtual Meal? Meal { get; set; }
 
         [ForeignKey("Food")]
         public int FoodId { get; set; }
-        public virtual Food Food { get; set; }
+        public virtual Food? Food { get; set; }
     }
 }

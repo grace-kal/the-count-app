@@ -36,7 +36,7 @@ namespace Count.App.Controllers
         public async Task<IActionResult> CreateBmi()
         {
             var user = await _userService.FindUserByUsername(User.Identity.Name);
-            var bmi = new BmiUserBindingModel
+            var bmi = new BmiUser
             {
                 UserId = user.Id
             };
@@ -44,12 +44,11 @@ namespace Count.App.Controllers
             return View(bmi);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateBmi([FromForm] BmiUserBindingModel model)
+        public async Task<IActionResult> CreateBmi([FromForm] BmiUser model)
         {
             if (ModelState.IsValid)
             {
-                var bmi = _mapper.Map<BmiUser>(model);
-                await _service.CreateBmi(bmi);
+                await _service.CreateBmi(model);
                 return RedirectToAction("HealthCheck", "Bmi");
             }
             return View(model);
@@ -63,17 +62,15 @@ namespace Count.App.Controllers
             {
                 return RedirectToAction("HealthCheck", "Bmi");
             }
-            var bmiBinding = _mapper.Map<BmiUserBindingModel>(bmi);
-            return View(bmiBinding);
+            return View(bmi);
 
         }
         [HttpPost]
-        public async Task<IActionResult> EditBmi([FromForm] BmiUserBindingModel model)
+        public async Task<IActionResult> EditBmi([FromForm] BmiUser model)
         {
             if (ModelState.IsValid)
             {
-                var bmi = _mapper.Map<BmiUser>(model);
-                await _service.EditBmi(bmi);
+                await _service.EditBmi(model);
                 return RedirectToAction("HealthCheck", "Bmi");
             }
             return View();
@@ -87,16 +84,14 @@ namespace Count.App.Controllers
             {
                 return RedirectToAction("HealthCheck", "Bmi");
             }
-            var bmiBinding = _mapper.Map<BmiUserBindingModel>(bmi);
-            return View(bmiBinding);
+            return View(bmi);
         }
         [HttpPost]
-        public async Task<IActionResult> DeleteBmi([FromForm] BmiUserBindingModel model)
+        public async Task<IActionResult> DeleteBmi([FromForm] BmiUser model)
         {
             if (ModelState.IsValid)
             {
-                var bmi = _mapper.Map<BmiUser>(model);
-                await _service.DeleteBmi(bmi);
+                await _service.DeleteBmi(model);
                 return RedirectToAction("HealthCheck", "Bmi");
             }
             return View();

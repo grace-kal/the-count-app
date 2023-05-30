@@ -20,7 +20,7 @@ namespace Count.Models
 
         [ForeignKey("User")]
         public string UserId { get; set; }
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
 
         public virtual IEnumerable<Meal>? Meals { get; set; }
 

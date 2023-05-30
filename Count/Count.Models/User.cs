@@ -20,8 +20,8 @@ namespace Count.Models
 
         public bool IsDelete { get; set; }
 
-        public virtual IEnumerable<Post> Posts { get; set; }
-        public virtual IEnumerable<BmiUser> UserBmis { get; set; }
-        public virtual IEnumerable<Day> Days { get; set; }
+        public virtual IEnumerable<Post>? Posts { get; set; }
+        public virtual IEnumerable<BmiUser>? UserBmis { get; set; }
+        public virtual IEnumerable<Day>? Days { get; set; }
     }
 }

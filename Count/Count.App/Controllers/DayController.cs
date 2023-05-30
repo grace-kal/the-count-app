@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Count.Models;
-using Count.Services;
 using Count.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -71,7 +70,6 @@ namespace Count.App.Controllers
         public async Task<IActionResult> DeleteDay(int id)
         {
             var day = await _service.FindDay(id);
-
             return View(day);
         }
         [HttpPost]
@@ -79,8 +77,7 @@ namespace Count.App.Controllers
         {
             if (ModelState.IsValid)
             {
-                var day = _mapper.Map<Day>(model);
-                await _service.DeleteDay(day);
+                await _service.DeleteDay(model);
                 return RedirectToAction("AllUserDays", "Day");
             }
             return View(model);
