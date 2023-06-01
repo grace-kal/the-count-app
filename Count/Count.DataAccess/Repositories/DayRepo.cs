@@ -46,6 +46,21 @@ namespace Count.DataAccess.Repositories
                 .Include(m => m.Foods)
                 .Where(m => m.DayId == id)
                 .ToListAsync();
+
+            foreach (var meal in list)
+            {
+                double caloriesOfMeal = 0;
+                List<MealFood> mealFoods = await _dbContext.MealFoods.Where(mf => mf.MealId == meal.Id).ToListAsync();
+                if (mealFoods != null)
+                {
+                    foreach (var mf in mealFoods)
+                    {
+                        caloriesOfMeal += mf.Calories;
+                    }
+                }
+                meal.AllCalories = caloriesOfMeal;
+                meal.CountOfFoodsForMeal = mealFoods.Count;
+            }
             return list;
         }
 

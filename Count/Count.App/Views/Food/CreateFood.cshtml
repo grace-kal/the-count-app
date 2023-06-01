@@ -9,6 +9,7 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
     @Html.HiddenFor(bu => bu.CreatedById)
     @Html.ValidationMessage("FoodAlreadyExists")
+    @Html.ValidationMessage("AddQuantityAndCalories")
     <div class="form-group">
         <label>Food:</label>
         <br />

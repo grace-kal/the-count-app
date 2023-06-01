@@ -4,6 +4,7 @@ using Count.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Count.DataAccess.Migrations
 {
     [DbContext(typeof(CountDbContext))]
-    partial class CountDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230601015036_AddingCAloriesToMealFood")]
+    partial class AddingCAloriesToMealFood
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,9 +145,6 @@ namespace Count.DataAccess.Migrations
 
                     b.Property<double>("AllCalories")
                         .HasColumnType("float");
-
-                    b.Property<int>("CountOfFoodsForMeal")
-                        .HasColumnType("int");
 
                     b.Property<string>("CourceTitle")
                         .IsRequired()

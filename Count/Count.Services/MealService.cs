@@ -38,9 +38,6 @@ namespace Count.Services
 
         public async Task DeleteMeal(Meal model)
         {
-            var meal = await FindMeal(model.Id);
-            meal.IsDeleted = true;
-
             await _repo.DeleteMeal(model);
         }
 
@@ -58,16 +55,28 @@ namespace Count.Services
         {
             return await _repo.AllFoodsOfMeal(id);
         }
-        public async Task CreateMealFood(MealFood model)
+
+        //adding food from list of foods view
+        public async Task AddFoodsToMeal(List<int> listOfMealIds, int foodId, double quantity)
         {
-            var meal = await FindMeal(model.MealId);
-            var food = await _foodRepo.FindFood(model.FoodId);
-            var mf = new MealFood();
-            mf.FoodId = food.Id;
-            mf.MealId = meal.Id;
+            //to get the calories for the selected quantity:
+            //grams of the whole food devided by grams of what is eaten = how many times is the eaten contained in the whole
+            //the calories devided of the whole devided by the upper number
+            var food = await _foodRepo.FindFood(foodId);
 
-            await _repo.CreateMealFood(mf);
+            foreach (var mealId in listOfMealIds)
+            {
+                var mf = new MealFood();
+                
+                mf.FoodId = food.Id;
+                var meal = await FindMeal(mealId);
+                mf.MealId = meal.Id;
+                
+                mf.Quantity = quantity;
+
+                mf.Calories = food.Calories/(food.Quantity / quantity);
+                await _repo.CreateMealFood(mf);
+            }
         }
-
     }
 }

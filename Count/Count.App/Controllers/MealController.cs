@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Count.App.Models;
 using Count.Models;
 using Count.Services;
 using Count.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace Count.App.Controllers
 {
@@ -84,47 +86,63 @@ namespace Count.App.Controllers
             return View(model);
         }
         [HttpGet]
-        public async Task<IActionResult> AddFoodToMeal(int id)//---id of the meal
+        public async Task<IActionResult> AddFoodToMeal(int id)//---id of the food
         {
-            var meal = await _service.FindMeal(id);
-            //CreateMealFoodVM newMF = new CreateMealFoodVM();//to make a list of foods for multiple
-            MealFood newMF = new MealFood();
-            newMF.MealId = meal.Id;
+            var food = await _serviceFood.FindFood(id);
+            var days = await _serviceDay.AllDaysOfUser(User.Identity.Name);
+            var meals = new List<Meal>();
+            var addFoodToMeal = new AddFoodToMealBindingModel()
+            {
+                FoodId = food.Id,
+                Food = food,
+                ListOfDays = new(),
+                ListOfMeals = new()
+            };
 
-            IEnumerable<Food> list = await _serviceFood.AllFoods();
+            foreach (var day in days)
+            {
 
-            ViewBag.Food = new SelectList(list, "Name", "Name", newMF.FoodId);
-            //newMF.Foods = list; 
-
-            //ViewBag.FoodList = new MultiSelectList(list, "Name","Name", newMF.Foods);
-            return View(newMF);
-
+                var meal = await _serviceDay.AllMealsOfDay(day.Id);
+                meals.AddRange(meal);
+                addFoodToMeal.ListOfDays.Add(
+                    new DayCheckListModel()
+                    {
+                        Id = day.Id,
+                        Date = day.Date,
+                        Meals = day.Meals
+                    }
+                );
+            }
+            foreach (var meal in meals)
+            {
+                addFoodToMeal.ListOfMeals.Add(
+                    new MealChecklistModel()
+                    {
+                        Id = meal.Id,
+                        CourceTitle = meal.CourceTitle,
+                        DayId = meal.DayId,
+                        IsDeleted = meal.IsDeleted
+                    }
+                );
+            }
+            return View(addFoodToMeal);
         }
         [HttpPost]
-        public async Task<IActionResult> AddFoodToMeal(/*CreateMealFoodVM*/MealFood model)
+        public async Task<IActionResult> AddFoodToMeal(AddFoodToMealBindingModel model)
         {
+            var check = model.ListOfSelectedMealsIds != null && model.FoodQuantity > 0;
+            if (check == false)
+            {
+                ModelState.AddModelError("SelectMealsAndQuantity", "Select meals and quantity(g)!");
+                return RedirectToAction("AddFoodToMeal", "Meal", new { id = model.FoodId });
+            }
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return RedirectToAction("AddFoodToMeal", "Meal", new { id = model.FoodId });
             }
-            var food = await _serviceFood.FindFoodByName(model.Food.Name);
-            model.FoodId = food.Id;
-            await _service.CreateMealFood(model);
-            //if (model.Foods.Count == 0)
-            //{
-            //    return RedirectToAction("AllFoodsOfMeal", "Meal", new { id = model.MealId });
-            //}
-            //else
-            //{
-            //    foreach (Food food in model.Foods)
-            //    {
-            //        var mf = new MealFood();
-            //        mf.FoodId = food.Id;
-            //        mf.MealId = model.MealId;
-            //        await _service.CreateMealFood(mf);
-            //    }
-            //}
-            return RedirectToAction("AllFoodsOfMeal", "Meal", new { id = model.MealId });
+
+            await _service.AddFoodsToMeal(model.ListOfSelectedMealsIds, model.FoodId, model.FoodQuantity);
+            return RedirectToAction("AllUserDays", "Day");
         }
         public async Task<IActionResult> RemoveFoodFromMeal(int id)
         {

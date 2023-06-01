@@ -4,6 +4,7 @@ using Count.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Count.DataAccess.Migrations
 {
     [DbContext(typeof(CountDbContext))]
-    partial class CountDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230531194131_FoodNameUnique")]
+    partial class FoodNameUnique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,9 +146,6 @@ namespace Count.DataAccess.Migrations
                     b.Property<double>("AllCalories")
                         .HasColumnType("float");
 
-                    b.Property<int>("CountOfFoodsForMeal")
-                        .HasColumnType("int");
-
                     b.Property<string>("CourceTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -175,17 +174,11 @@ namespace Count.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<double>("Calories")
-                        .HasColumnType("float");
-
                     b.Property<int>("FoodId")
                         .HasColumnType("int");
 
                     b.Property<int>("MealId")
                         .HasColumnType("int");
-
-                    b.Property<double>("Quantity")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

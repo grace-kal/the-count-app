@@ -28,7 +28,7 @@ namespace Count.App.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("AllFoods", "Food");
+                return RedirectToAction("AllFoodss", "Food");
             }
             var user = await _userService.FindUserByUsername(User.Identity.Name);
             var food = new Food();
@@ -47,12 +47,20 @@ namespace Count.App.Controllers
             var check = list.FirstOrDefault(l => l.Name == model.Name);
             if (check != null)
             {
-                ModelState.AddModelError("FoodAlreadyExists", "This food is already in the database!");
+                ModelState.AddModelError("FoodAlreadyExists", "Food with this name is already in the database!");
                 return View(model);
             }
+
+            var checkQuantityandCalories = model.Quantity > 0 && model.Calories > 0;
+            if (!checkQuantityandCalories)
+            {
+                ModelState.AddModelError("AddQuantityAndCalories", "Add calories and quantity!");
+                return View(model);
+            }
+
             var food = _mapper.Map<Food>(model);
             await _service.CreateFood(food);
-            return RedirectToAction("AllFoods", "Food");
+            return RedirectToAction("AllFoodss", "Food");
 
         }
         [HttpGet]
@@ -70,7 +78,7 @@ namespace Count.App.Controllers
             {
                 var food = _mapper.Map<Food>(model);
                 await _service.EditFood(food);
-                return RedirectToAction("AllFoods", "Food");
+                return RedirectToAction("AllFoodss", "Food");
             }
             return View();
         }
@@ -87,7 +95,7 @@ namespace Count.App.Controllers
             {
                 var food = _mapper.Map<Food>(model);
                 await _service.DeleteFood(food);
-                return RedirectToAction("AllFoods", "Food");
+                return RedirectToAction("AllFoodss", "Food");
             }
             return View();
         }

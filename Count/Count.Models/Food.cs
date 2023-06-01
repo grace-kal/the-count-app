@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using KeyAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
 namespace Count.Models
 {
+    [Index(nameof(Name), IsUnique = true)]
     public class Food
     {
         [Key]
@@ -23,6 +25,6 @@ namespace Count.Models
         public string? CreatedById { get; set; }
         public virtual User? CreatedBy { get; set; }
 
-        public virtual IEnumerable<Meal>? Meals { get;set; }
+        public virtual IEnumerable<Meal>? Meals { get; set; }
     }
 }

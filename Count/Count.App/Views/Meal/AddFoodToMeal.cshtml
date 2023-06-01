@@ -1,26 +1,101 @@
-﻿@model Count.Models.MealFood
+﻿@model Count.App.Models.AddFoodToMealBindingModel
 @{
     ViewData["Title"] = "AddFoodToMeal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<h1>Select Food For Meal</h1>
+<h2>Add Food To Meals</h2>
 <form asp-controller="Meal" asp-action="AddFoodToMeal" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
-    @Html.HiddenFor(bu => bu.MealId)
+    @Html.HiddenFor(bu => bu.FoodId)
+    @Html.HiddenFor(bu => bu.Food)
+    @Html.ValidationMessage("SelectMealsAndQuantity")
 
+    @if (Model.Food.IsDelete == false)
+    {
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td>Food</td>
+                    <td>Calories for the quantity</td>
+                    <td>Quantity(g)</td>
+                    <td class="text-danger">Carbs(g)</td>
+                    <td class="text-warning">Fats(g)</td>
+                    <td class="text-success">Proteins(g)</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>@Model.Food.Name</td>
+                    <td>@Model.Food.Calories</td>
+                    <td>@Model.Food.Quantity gm</td>
+                    <td class="text-danger">@Model.Food.Carbs gm</td>
+                    <td class="text-warning">@Model.Food.Fats gm</td>
+                    <td class="text-success">@Model.Food.Proteins gm</td>
+                </tr>
+            </tbody>
+        </table>
+    }
     <div class="form-group">
-        <label>Food:</label>
+        <label>Food quantity(g):</label>
         <br />
-        <select asp-for="Food.Name" asp-items="@ViewBag.Food" class="form-control"></select>
-        @*<select asp-for="Foods"  multiple>
-                @foreach (var food in Model.Foods)
-                {
-                    <option value="@food.Id">@food.Name</option>
-                }
-            </select>*@
+        <input asp-for="FoodQuantity" class="form-control" />
+        <span asp-validation-for="FoodQuantity" class="text-danger"></span>
     </div>
+
+    @if (Model.ListOfDays != null)
+    {
+        @foreach (var day in Model.ListOfDays.OrderByDescending(d => d.Date))
+        {
+            <div>
+                <h5>@day.Date</h5>
+            </div>
+            @if (day.Meals != null)
+            {
+                @foreach (var meal in Model.ListOfMeals.Where(m => m.DayId == day.Id && m.IsDeleted == false))
+                {
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <td>Id</td>
+                                <td>Meal title</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="@meal.Id" name="ListOfSelectedMealsIds" id="ListOfSelectedMealsIds" checked="@meal.isChecked">
+                                        <label class="form-check-label" for="@meal.Id">
+                                            @meal.Id
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>@meal.CourceTitle</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                }
+            }
+            else
+            {
+                <div>
+                    <p>Add meals in this day!</p>
+                </div>
+            }
+        }
+    }
+    else
+    {
+        <div>
+            <p>Add days in your diary!</p>
+        </div>
+    }
+
 
     <button class="btn btn-success"><i class="fas fa-seedling"></i> Add</button>
     <br />

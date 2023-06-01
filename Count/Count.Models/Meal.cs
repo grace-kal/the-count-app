@@ -12,6 +12,7 @@ namespace Count.Models
         public double AllCalories { get; set; }
         public bool IsComplete { get; set; }
         public bool IsDeleted { get; set; }
+        public int CountOfFoodsForMeal { get; set; }
 
         [ForeignKey("Day")]
         public int DayId { get; set; }

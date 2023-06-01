@@ -17,5 +17,9 @@ namespace Count.Models
         [ForeignKey("Food")]
         public int FoodId { get; set; }
         public virtual Food? Food { get; set; }
+
+        [Required]
+        public double Quantity { get; set; }
+        public double Calories { get; set; }
     }
 }

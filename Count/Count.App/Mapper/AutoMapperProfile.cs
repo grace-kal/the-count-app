@@ -19,6 +19,7 @@ namespace Count.App.Mapper
             CreateMap<Day, Day>();
 
             CreateMap<Meal, Meal>();
+
             CreateMap<Food, Food>();
         }
     }

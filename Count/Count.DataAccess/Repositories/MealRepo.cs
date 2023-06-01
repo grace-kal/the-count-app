@@ -45,7 +45,10 @@ namespace Count.DataAccess.Repositories
 
         public async Task DeleteMeal(Meal model)
         {
-            _dbContext.Meals.Update(model);
+            var meal = await FindMeal(model.Id);
+            meal.IsDeleted = true;
+
+            _dbContext.Meals.Update(meal);
             await _dbContext.SaveChangesAsync();
         }
 

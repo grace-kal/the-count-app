@@ -14,7 +14,7 @@ namespace Count.Services.Interfaces
         Task EditMeal(Meal model);
         Task DeleteMeal(Meal model);
         Task RemoveFoodFromMeal(int id);
-        Task CreateMealFood(MealFood model);
+        Task AddFoodsToMeal(List<int> listOfMealIds, int foodId, double quantity);
         Task<List<MealFood>> AllFoodsOfMeal(int id);
         Task<MealFood> FindMealFoodById(int id);
     }
