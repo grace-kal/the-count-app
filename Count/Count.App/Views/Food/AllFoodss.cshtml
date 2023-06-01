@@ -16,6 +16,14 @@
         </li>
     </ul>
 </div>
+<div>
+    <form asp-controller="Food" asp-action="AllFoodss" method="get">
+        <p>
+            Title: <input type="text" name="SearchString" />
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
+</div>
 <div class="table-responsive p-0">
     <table class="table table-hover">
         <thead>

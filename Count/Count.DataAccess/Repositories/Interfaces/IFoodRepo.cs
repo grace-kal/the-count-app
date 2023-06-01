@@ -12,6 +12,7 @@ namespace Count.DataAccess.Repositories.Interfaces
         Task<Food> FindFood(int id);
         Task<Food> FindFoodByName(string name);
         Task<List<Food>> AllFoods();
+        Task<List<Food>> FilterFoods(string searchString);
         Task CreateFood(Food model);
         Task EditFood(Food model);
         Task DeleteFood(Food model);

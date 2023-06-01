@@ -20,6 +20,11 @@ namespace Count.Services
             return await _repo.AllFoods();
         }
 
+        public async Task<List<Food>> FilterFoods(string searchString)
+        {
+            return await _repo.FilterFoods(searchString);
+        }
+
         public async Task CreateFood(Food model)
         {
             await _repo.CreateFood(model);

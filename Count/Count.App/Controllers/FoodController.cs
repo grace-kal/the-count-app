@@ -18,9 +18,13 @@ namespace Count.App.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        public async Task<IActionResult> AllFoodss()
+        public async Task<IActionResult> AllFoodss(string? searchString)
         {
-            var list = await _service.AllFoods();
+            var list = new List<Food>();
+            if (!String.IsNullOrEmpty(searchString))
+                list = await _service.FilterFoods(searchString);
+            else
+                list = await _service.AllFoods();
             return View(list);
         }
         [HttpGet]

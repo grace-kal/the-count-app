@@ -22,6 +22,16 @@ namespace Count.DataAccess.Repositories
             return list;
         }
 
+        public async Task<List<Food>> FilterFoods(string searchString)
+        {
+            List<Food> list = await _dbContext.Foods
+                .Include(f => f.Meals)
+                .Include(f => f.CreatedBy)
+                .Where(f => f.Name!.Contains(searchString))
+                .ToListAsync();
+            return list;
+        }
+
         public async Task CreateFood(Food model)
         {
             await _dbContext.Foods.AddAsync(model);
