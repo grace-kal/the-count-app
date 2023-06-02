@@ -10,7 +10,7 @@
 }
 else
 {
-    <div>
+    @* <div>
         <div class="ProfileContent">
 
             <table>
@@ -92,7 +92,7 @@ else
             </table>
 
         </div>
-    </div>
+    </div>*@
     <div>
         @foreach (var post in Model.Posts.OrderByDescending(p => p.PostedOn))
         {
@@ -111,8 +111,8 @@ else
                                         <button class="dropbtn"><i class="fas fa-ellipsis-v"></i></button>
                                         <div class="dropdown-content">
                                             <a asp-controller="Post" asp-action="DetailsPost" asp-route-id="@post.Id"><i class="fas fa-info-circle"></i> Details</a>
-                                            <a  asp-controller="Post" asp-action="EditPost" asp-route-id="@post.Id"><i class="fas fa-edit"></i> Edit</a>
-                                            <a  asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id"><i class="fas fa-trash"></i> Delete</a>
+                                            <a asp-controller="Post" asp-action="EditPost" asp-route-id="@post.Id"><i class="fas fa-edit"></i> Edit</a>
+                                            <a asp-controller="Post" asp-action="DeletePost" asp-route-id="@post.Id"><i class="fas fa-trash"></i> Delete</a>
                                         </div>
                                     </div>
 

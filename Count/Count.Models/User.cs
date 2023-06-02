@@ -13,6 +13,7 @@ namespace Count.Models
         public double Weight { get; set; }
         [Required]
         public double Height { get; set; }
+        public double GoalWeight { get; set; }
         [Required]
         public int Age { get; set; }
         public string Sex { get; set; }

@@ -6,7 +6,9 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AutoMapper;
 using Count.Models;
+using Count.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,13 +19,16 @@ namespace Count.App.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IUserService _userService;
 
         public IndexModel(
             UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userService = userService;
         }
 
         /// <summary>
@@ -59,6 +64,24 @@ namespace Count.App.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "First name")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Last name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Height")]
+            public double Height { get; set; }
+
+            [Display(Name = "Weight")]
+            public double Weight { get; set; }
+
+            [Display(Name = "Sex")]
+            public string Sex { get; set; }
+
+            [Display(Name = "Country")]
+            public string Country { get; set; }
         }
 
         private async Task LoadAsync(User user)
@@ -67,10 +90,16 @@ namespace Count.App.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
-             
+
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Height = user.Height,
+                Weight = user.Weight,
+                Sex = user.Sex,
+                Country = user.Country
             };
         }
 
@@ -110,6 +139,15 @@ namespace Count.App.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.Height = Input.Height;
+            user.Weight = Input.Weight;
+            user.Sex = Input.Sex;
+            user.Country = Input.Country;
+
+            await _userService.EditUser(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

@@ -4,6 +4,7 @@ using Count.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Count.DataAccess.Migrations
 {
     [DbContext(typeof(CountDbContext))]
-    partial class CountDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230602003018_AddingGoalWeight")]
+    partial class AddingGoalWeight
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,9 +40,6 @@ namespace Count.DataAccess.Migrations
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<double>("GoalWeight")
-                        .HasColumnType("float");
 
                     b.Property<double>("Height")
                         .HasColumnType("float");
