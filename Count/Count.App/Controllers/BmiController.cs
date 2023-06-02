@@ -3,6 +3,7 @@ using Count.App.Models;
 using Count.Models;
 using Count.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Count.App.Controllers
 {
@@ -29,8 +30,40 @@ namespace Count.App.Controllers
             var user = await _userService.FindUserByUsername(User.Identity.Name);
             var list = await _service.AllUserUserBmis(user.Id);
 
-            return View(list);
+            var healthCheckModel = new HealthCheckModel
+            {
+                UserBmis = list
+            };
 
+            if (list.Count == 0)
+                return View(healthCheckModel);
+
+            var latestBmi = list.MaxBy(x => x.Date);
+            var latestBmiInfo = new LatetsBmiInfo
+            {
+                LatestBmi = latestBmi
+            };
+
+            if (user.GoalWeight > 0)
+                latestBmiInfo.DistanceFromGoalWeight = Math.Abs(latestBmi.Weight - user.GoalWeight);
+
+            switch (latestBmi.Bmi)
+            {
+                case Bmi.Normal:
+                    latestBmiInfo.Status = "Your weight is normal for your height!";
+                    break;
+                case Bmi.Overweight:
+                    latestBmiInfo.Status = "You're overweight for your height!";
+                    //TODO latestBmiInfo.HealthyWeight = ;
+                    break;
+                case Bmi.Underweight:
+                    latestBmiInfo.Status = "You're underweight for your height!";
+                    break;
+                default: return View(healthCheckModel);
+            }
+
+            healthCheckModel.LatestBmiInfo = latestBmiInfo;
+            return View(healthCheckModel);
         }
         [HttpGet]
         public async Task<IActionResult> CreateBmi()

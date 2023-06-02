@@ -1,5 +1,4 @@
-﻿@using Count.Models;
-@model List<BmiUser>
+﻿@model HealthCheckModel
 @{
     ViewData["Title"] = "HealthCheck";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,6 +16,49 @@
         </li>
     </ul>
 </div>
+<div class="FeedCreateBand">
+    <ul>
+        <li>
+            <a asp-controller="Bmi" asp-action="AddGoalWeight">
+                <span><i class="fas fa-plus-circle"></i></span>
+                <span>Add weight goal</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<ul style="list-style-type:none">
+    <li>
+        @if (Model.LatestBmiInfo.LatestBmi != null)
+        {
+            <h5>
+                Report based on your last recorded BMI:
+            </h5>
+            <h6>
+                @Model.LatestBmiInfo.Status
+            </h6>
+            <span>
+                Bmi: @Model.LatestBmiInfo.LatestBmi.CalculatedBmi
+            </span>
+
+            <br />
+
+            @if (Model.LatestBmiInfo.DistanceFromGoalWeight > 0)
+            {
+                <span>
+                    Distance from goal weight: @Model.LatestBmiInfo.DistanceFromGoalWeight
+                </span>
+            }
+            else
+            {
+                <span>
+                    Distance from goal weight: Add weight goal!
+                </span>
+            }
+        }
+    </li>
+</ul>
+
 <div class="table-responsive p-0">
     <table class="table table-hover">
         <thead>
@@ -31,7 +73,7 @@
             </tr>
         </thead>
 
-        @foreach (var bmi in Model.OrderByDescending(bu => bu.Date))
+        @foreach (var bmi in Model.UserBmis.OrderByDescending(bu => bu.Date))
         {
             @if (bmi.IsDeleted == false)
             {
@@ -52,7 +94,6 @@
                             <td class="table-warning">@bmi.Bmi</td>
                             <td class="text-warning">@bmi.CalculatedBmi</td>
                         }
-
 
                         <td><i>@bmi.Date</i></td>
                         <td>@bmi.Weight</td>

@@ -18,7 +18,6 @@ namespace Count.Models
         public double Weight { get; set; }
         [Required]
         public double Height { get; set; }
-        public double GoalWeight { get; set; }
         public double CalculatedBmi { get; set; }
         public bool IsDeleted { get; set; }
 
