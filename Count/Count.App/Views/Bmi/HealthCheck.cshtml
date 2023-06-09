@@ -16,16 +16,6 @@
         </li>
     </ul>
 </div>
-<div class="FeedCreateBand">
-    <ul>
-        <li>
-            <a asp-controller="Bmi" asp-action="AddGoalWeight">
-                <span><i class="fas fa-plus-circle"></i></span>
-                <span>Add weight goal</span>
-            </a>
-        </li>
-    </ul>
-</div>
 
 <ul style="list-style-type:none">
     <li>
@@ -46,7 +36,7 @@
             @if (Model.LatestBmiInfo.DistanceFromGoalWeight > 0)
             {
                 <span>
-                    Distance from goal weight: @Model.LatestBmiInfo.DistanceFromGoalWeight
+                    Distance from goal weight: @Model.LatestBmiInfo.DistanceFromGoalWeight kg
                 </span>
             }
             else

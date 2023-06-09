@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Count.App", "Count.App\Count.App.csproj", "{8EE3F4F2-907F-42AD-ABCE-BB14F03EAD3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Count.App", "Count.App\Count.App.csproj", "{8EE3F4F2-907F-42AD-ABCE-BB14F03EAD3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Count.DataAccess", "Count.DataAccess\Count.DataAccess.csproj", "{CD620C4F-0D91-40CC-950D-C80543900A22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Count.DataAccess", "Count.DataAccess\Count.DataAccess.csproj", "{CD620C4F-0D91-40CC-950D-C80543900A22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Count.Models", "Count.Models\Count.Models.csproj", "{31981807-209A-4279-88FC-EE87D8C554AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Count.Models", "Count.Models\Count.Models.csproj", "{31981807-209A-4279-88FC-EE87D8C554AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Count.Services", "Count.Services\Count.Services.csproj", "{DAB04D75-B713-42A9-9CE1-A81C7F00AADF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Count.Services", "Count.Services\Count.Services.csproj", "{DAB04D75-B713-42A9-9CE1-A81C7F00AADF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

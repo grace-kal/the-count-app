@@ -77,6 +77,9 @@ namespace Count.App.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Weight")]
             public double Weight { get; set; }
 
+            [Display(Name = "Goal weight")]
+            public double GoalWeight { get; set; }
+
             [Display(Name = "Sex")]
             public string Sex { get; set; }
 
@@ -98,6 +101,7 @@ namespace Count.App.Areas.Identity.Pages.Account.Manage
                 LastName = user.LastName,
                 Height = user.Height,
                 Weight = user.Weight,
+                GoalWeight = user.GoalWeight,
                 Sex = user.Sex,
                 Country = user.Country
             };
@@ -144,6 +148,7 @@ namespace Count.App.Areas.Identity.Pages.Account.Manage
             user.LastName = Input.LastName;
             user.Height = Input.Height;
             user.Weight = Input.Weight;
+            user.GoalWeight = Input.GoalWeight;
             user.Sex = Input.Sex;
             user.Country = Input.Country;
 
